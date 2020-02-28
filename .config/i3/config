@@ -36,7 +36,9 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+q kill
 
 #lock
-bindsym $mod+Shift+p exec betterlockscreen -l dim
+bindsym $mod+l exec betterlockscreen -l dim
+bindsym $mod+Shift+l exec --no-startup-id systemctl suspend
+
 
 # start dmenu (a program launcher)
 #bindsym $mod+space exec dmenu_run
@@ -44,7 +46,8 @@ bindsym $mod+Shift+p exec betterlockscreen -l dim
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 #bindsym $mod+space exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+space exec rofi -show drun -theme onedark.rasi 
+bindsym $mod+space exec rofi -show drun -theme onedark.rasi
+bindsym $mod+b exec bitbucketsearch
 
 
 # Pulse Audio controls
@@ -67,7 +70,7 @@ bindsym XF86AudioPrev exec playerctl previous
 # change focus
 bindsym $mod+j focus left
 #bindsym $mod+k focus down
-bindsym $mod+l focus up
+#bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
@@ -79,7 +82,7 @@ bindsym $mod+Up focus right
 # move focused window
 bindsym $mod+Shift+j move left
 #bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
+#bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
@@ -132,42 +135,33 @@ bindsym $mod+5 workspace 5
 #bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
-bindsym $mod+s workspace "Spotify"
-for_window [class="Spotify"] move to workspace "Spotify"
+bindsym $mod+s workspace "Spotify"; exec [ $(ps h -C spotify | wc -l) = 0 ] && /usr/bin/spotify -s
+#for_window [class="Spotify"] move to workspace "Spotify"
 
-bindsym $mod+c workspace "Code"
-assign [class="Code"] "Code"
-for_window [class="Code"] focus
+bindsym $mod+c workspace "Code"; exec [ $(ps h -C code | wc -l) = 0 ] && /usr/bin/code
+#assign [class="Code"] "Code"
+#for_window [class="Code"] focus
 
-bindsym $mod+g workspace "Google" 
-assign [class="Google-chrome"] "Google"
-for_window [class="Google-chrome"] focus
+bindsym $mod+g workspace "Google"; exec [ $(ps h -C chrome | wc -l) = 0 ] && /usr/bin/google-chrome -s
+#assign [class="Google-chrome"] "Google"
+#for_window [class="Google-chrome"] focus
 
-bindsym $mod+m workspace "Mattermost"
-assign [class="Mattermost"] "Mattermost" 
-for_window [class="Mattermost"] focus
+bindsym $mod+m workspace "Mattermost"; exec [ $(ps h -C mattermost-desktop | wc -l) = 0 ] && /usr/local/bin/mattermost-desktop -s
+#assign [class="Mattermost"] "Mattermost" 
+#for_window [class="Mattermost"] focus
 
 bindsym $mod+z workspace "Zoom"
 assign [class="zoom"] "Zoom"
 
-bindsym $mod+k workspace "GitKraken"
-assign [class="GitKraken"] "GitKraken"
+bindsym $mod+k workspace "GitKraken"; exec [ $(ps h -C gitkraken | wc -l) = 0 ] && /usr/bin/gitkraken -s
+#assign [class="GitKraken"] "GitKraken"
 #for_window [class="GitKraken"] focus
 
-bindsym $mod+6 workspace "T36"
-for_window [class="Gnome-terminal" title="toru-0036<eobuwie>"] move to workspace "T36"
+bindsym $mod+t workspace "Torus"
+bindsym $mod+y workspace "Tccs"
 
-bindsym $mod+9 workspace "T39"
-for_window [class="Gnome-terminal" title="toru-0039<eobuwie>"] move to workspace "T39"
-
-bindsym $mod+7 workspace "Tcc"
-for_window [class="Gnome-terminal" title="tcc-9<eobuwie>"] move to workspace "Tcc"
-
-bindsym $mod+8 workspace "Test-Tcc"
-for_window [class="Gnome-terminal" title="test-tcc-9<eobuwie>"] move to workspace "Test-Tcc"
-
-bindsym $mod+o workspace "Mailspring"
-for_window [class="Mailspring"] move to workspace "Mailspring"
+bindsym $mod+o workspace "Mailspring"; exec [ $(ps h -C mailspring | wc -l) = 3 ] && /snap/bin/mailspring
+#for_window [class="Mailspring"] move to workspace "Mailspring"
 
 workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace back_and_forth
@@ -186,10 +180,8 @@ bindsym $mod+Shift+g move container to workspace "Google"
 bindsym $mod+Shift+k move container to workspace "GitKraken"
 bindsym $mod+Shift+o move container to workspace "Mailspring"
 bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace "T36"
-bindsym $mod+Shift+7 move container to workspace "Tcc"
-bindsym $mod+Shift+8 move container to workspace "Test-Tcc"
-bindsym $mod+Shift+9 move container to workspace "T39"
+bindsym $mod+Shift+t move container to workspace "Torus"
+bindsym $mod+Shift+y move container to workspace "Tccs"
 bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
@@ -232,7 +224,7 @@ exec_always compton -f
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	font pango:Inconsolata 10
+	font pango:Inconsolata 14
 	position bottom
 	tray_output none
 	status_command ~/.config/bumblebee-status/bumblebee-status -m xrandr vpn spotify nic bluetooth cpu battery pasink pasource date time -p root.path=/ time.format="%H:%M CW %V" date.format="%a, %b %d %Y" nic.exclude="enp,lo" -t solarized-powerline
