@@ -46,8 +46,7 @@ bindsym $mod+Shift+l exec --no-startup-id systemctl suspend
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 #bindsym $mod+space exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+space exec rofi -show drun -theme onedark.rasi
-bindsym $mod+b exec bitbucketsearch
+bindsym $mod+space exec rofi -show drun -theme /home/logi/.config/rofi/onedark.rasi
 
 
 # Pulse Audio controls
@@ -56,8 +55,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master 1+ toggle # mute sound
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 100 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 100 # decrease screen brightness
 
 
 # Media player controls
@@ -74,10 +73,10 @@ bindsym $mod+j focus left
 bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
-#bindsym $mod+Left focus left
-bindsym $mod+Down focus left
-bindsym $mod+Up focus right
-#bindsym $mod+Right focus right
+bindsym $mod+Left focus left
+#bindsym $mod+Down focus left
+#bindsym $mod+Up focus right
+bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+j move left
@@ -118,8 +117,8 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Cycle through active workspaces
-bindsym $mod+Right workspace next
-bindsym $mod+Left workspace prev
+bindsym $mod+Up workspace next
+bindsym $mod+Down workspace prev
 
 
 # switch to workspace
@@ -135,7 +134,7 @@ bindsym $mod+5 workspace 5
 #bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
-bindsym $mod+s workspace "Spotify"; exec [ $(ps h -C spotify | wc -l) = 0 ] && /usr/bin/spotify -s
+bindsym $mod+s workspace "Spotify"; exec [ $(ps h -C spotify | wc -l) = 0 ] && LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify
 #for_window [class="Spotify"] move to workspace "Spotify"
 
 bindsym $mod+c workspace "Code"; exec [ $(ps h -C code | wc -l) = 0 ] && /usr/bin/code
@@ -146,8 +145,8 @@ bindsym $mod+g workspace "Google"; exec [ $(ps h -C chrome | wc -l) = 0 ] && /us
 #assign [class="Google-chrome"] "Google"
 #for_window [class="Google-chrome"] focus
 
-bindsym $mod+m workspace "Mattermost"; exec [ $(ps h -C mattermost-desktop | wc -l) = 0 ] && /usr/local/bin/mattermost-desktop -s
-#assign [class="Mattermost"] "Mattermost" 
+bindsym $mod+m workspace "Zulip"; exec [ $(ps h -C zulip | wc -l) = 0 ] && /usr/bin/zulip
+#assign [class="Mattermost"] "Mattermost"
 #for_window [class="Mattermost"] focus
 
 bindsym $mod+z workspace "Zoom"
@@ -157,11 +156,10 @@ bindsym $mod+k workspace "GitKraken"; exec [ $(ps h -C gitkraken | wc -l) = 0 ] 
 #assign [class="GitKraken"] "GitKraken"
 #for_window [class="GitKraken"] focus
 
-bindsym $mod+t workspace "Torus"
-bindsym $mod+y workspace "Tccs"
-
-bindsym $mod+o workspace "Mailspring"; exec [ $(ps h -C mailspring | wc -l) = 3 ] && /snap/bin/mailspring
+bindsym $mod+t workspace "Thunderbird"; exec [ $(ps h -C thunderbird | wc -l) = 0 ] && /usr/bin/thunderbird
 #for_window [class="Mailspring"] move to workspace "Mailspring"
+
+bindsym $mod+b workspace "Background"
 
 workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace back_and_forth
@@ -174,14 +172,13 @@ for_window [class="^.*"] border pixel 0
 # move focused container to workspace
 bindsym $mod+Shift+c move container to workspace "Code"
 bindsym $mod+Shift+s move container to workspace "Spotify"
-bindsym $mod+Shift+m move container to workspace "Mattermost"
+bindsym $mod+Shift+m move container to workspace "Zulip"
 bindsym $mod+Shift+z move container to workspace "Zoom"
 bindsym $mod+Shift+g move container to workspace "Google"
 bindsym $mod+Shift+k move container to workspace "GitKraken"
-bindsym $mod+Shift+o move container to workspace "Mailspring"
+bindsym $mod+Shift+t move container to workspace "Thunderbird"
+bindsym $mod+Shift+b move container to workspace "Background"
 bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+t move container to workspace "Torus"
-bindsym $mod+Shift+y move container to workspace "Tccs"
 bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
@@ -224,8 +221,19 @@ exec_always compton -f
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	font pango:Inconsolata 14
+	font pango:Inconsolata 11
 	position bottom
 	tray_output none
-	status_command ~/.config/bumblebee-status/bumblebee-status -m xrandr vpn spotify nic bluetooth cpu battery pasink pasource date time -p root.path=/ time.format="%H:%M CW %V" date.format="%a, %b %d %Y" nic.exclude="enp,lo" -t solarized-powerline
+        #status_command i3status
+	status_command bumblebee-status -m xrandr vpn spotify bluetooth cpu battery pasink pasource date time -p root.path=/ time.format="%H:%M CW %V" date.format="%a, %b %d %Y" nic.exclude="enp,lo" -t solarized-powerline
 }
+
+#Change language
+exec "setxkbmap -layout us,de" #set english as default
+exec "setxkbmap -option 'grp:alt_shift_toggle'"
+
+# Set home screen layout
+
+exec --no-startup-id lxpolkit
+exec --no-startup-id redshift
+exec --no-startup-id ~/.screenlayout/home_screen_layout.sh
