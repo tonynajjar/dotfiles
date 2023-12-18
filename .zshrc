@@ -72,11 +72,6 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-IS_ROBOT=no
-export CATKIN_WS=/home/najjar/catkin_ws
-source /home/najjar/dotfiles/zsh/zshrc_magazino
-source /home/najjar/hhighlighter/h.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
