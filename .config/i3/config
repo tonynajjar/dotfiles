@@ -159,7 +159,7 @@ bindsym $mod+m workspace "Teams"; exec [ $(ps h -C teams | wc -l) = 0 ] && /snap
 bindsym $mod+z workspace "Zoom"
 assign [class="zoom"] "Zoom"
 
-bindsym $mod+t workspace "Thunderbird"; exec [ $(ps h -C thunderbird | wc -l) = 0 ] && /usr/bin/thunderbird
+bindsym $mod+t workspace "Mail"; exec [ $(ps h -C prospect-mail | wc -l) = 0 ] && /snap/bin/prospect-mail
 #for_window [class="Mailspring"] move to workspace "Mailspring"
 
 bindsym $mod+b workspace "Background"
@@ -178,7 +178,7 @@ bindsym $mod+Shift+s move container to workspace "Spotify"
 bindsym $mod+Shift+m move container to workspace "Teams"
 bindsym $mod+Shift+z move container to workspace "Zoom"
 bindsym $mod+Shift+g move container to workspace "Google"
-bindsym $mod+Shift+t move container to workspace "Thunderbird"
+bindsym $mod+Shift+t move container to workspace "Mail"
 bindsym $mod+Shift+b move container to workspace "Background"
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+0 move container to workspace 10
