@@ -1,7 +1,7 @@
 ### DEPENDENCIES ###
 
 # pip install --user bumblebee-status
-# sudo apt install maim xclip fonts-font-awesome compton brightnessctl
+# sudo apt install maim xclip fonts-font-awesome compton brightnessctl lxpolkit
 # wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | sudo bash -s system
 
 ### DEPENDENCIES ###
