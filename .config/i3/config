@@ -154,7 +154,7 @@ bindsym $mod+g workspace "Google"; exec [ $(ps h -C chrome | wc -l) = 0 ] && /us
 #assign [class="Google-chrome"] "Google"
 #for_window [class="Google-chrome"] focus
 
-bindsym $mod+m workspace "Teams"; exec [ $(ps h -C teams | wc -l) = 0 ] && /snap/bin/teams-for-linux
+bindsym $mod+m workspace "Teams"; exec [ $(ps h -C teams-for-linux | wc -l) = 0 ] && /snap/bin/teams-for-linux
 
 bindsym $mod+z workspace "Zoom"
 assign [class="zoom"] "Zoom"
